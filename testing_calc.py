@@ -16,7 +16,9 @@ class BMIclac:
     def set_result(self):
         counter = 1
         result = 0
-        if self.sex == "male": bMItable = self.BMItable["male"]
+        if self.sex == "male": bmitable = self.BMItable["male"]
+        if self.sex == "female": bmitable = self.BMItable["female"]
+        if self.sex == "no_sex": bmitable = self.BMItable["no_sex"]
         for element in bmitable[1:]:
             counter = counter + 1
             if self.bmi > element[1] < element[2]:
