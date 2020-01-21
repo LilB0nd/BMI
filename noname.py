@@ -29,10 +29,13 @@ class Panel ( wx.Panel ):
 		Geschlecht = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Geschlecht" ), wx.VERTICAL )
 
 		self.male_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"männlich", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.male_button, 1, wx.ALL, 5 )
+		Geschlecht.Add( self.male_button, 0, wx.ALL, 5 )
 
 		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.female_button, 1, wx.ALL, 5 )
+		Geschlecht.Add( self.female_button, 0, wx.ALL, 5 )
+
+		self.nosex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"RadioBtn", wx.DefaultPosition, wx.DefaultSize, 0 )
+		Geschlecht.Add( self.nosex_button, 0, wx.ALL, 5 )
 
 
 		input_sizer.Add( Geschlecht, 0, wx.EXPAND, 5 )
@@ -44,7 +47,7 @@ class Panel ( wx.Panel ):
 		self.text_groesse = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Größe:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_groesse.Wrap( -1 )
 
-		groesse_sizer.Add( self.text_groesse, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		groesse_sizer.Add( self.text_groesse, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
 
 		self.text_gewicht = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Gewicht:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_gewicht.Wrap( -1 )
@@ -89,7 +92,7 @@ class Panel ( wx.Panel ):
 		self.m_staticText131.SetMinSize( wx.Size( 60,20 ) )
 		self.m_staticText131.SetMaxSize( wx.Size( 60,20 ) )
 
-		alter_sizer.Add( self.m_staticText131, 0, wx.ALIGN_LEFT|wx.ALL, 5 )
+		alter_sizer.Add( self.m_staticText131, 0, wx.ALIGN_CENTER|wx.ALIGN_LEFT|wx.ALL, 5 )
 
 
 		alter_sizer.Add( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -98,7 +101,7 @@ class Panel ( wx.Panel ):
 		Personen_sizer.Add( alter_sizer, 0, wx.EXPAND, 5 )
 
 
-		input_sizer.Add( Personen_sizer, 1, wx.EXPAND, 5 )
+		input_sizer.Add( Personen_sizer, 0, wx.ALIGN_BOTTOM, 5 )
 
 
 		main_sizer.Add( input_sizer, 1, wx.EXPAND, 5 )

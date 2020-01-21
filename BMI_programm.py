@@ -1,8 +1,18 @@
 from noname import Panel
 import wx
-from typing import Optional
 
-class BmiCalc:
+class BMIclac(Panel):
+    def set_table(self):
+        self.BMItable = (("Untergewicht", ">18.4"), ("Normalgewicht", 18.5, 24.9), ("Übergewicht", 25, 29.9),
+                         ("Starkes Übergewicht(Apdipositas Grad I)", 30, 34.9),("Apdipositas Grad II", 35, 39.9),
+                         ("Adipositas Grad III", ">40"))
+        if self.BMItable[0]:
+            print(self.BMItable)
+
+    def set_bmi(self):
+        pass
+
+class BMIprocessing(Panel):
     """Interface for BMI Calculation"""
 
     def get_bmi(self) -> float:
@@ -19,49 +29,52 @@ class BmiCalc:
         """ get current age
         :return: current age
         """
-        pass  # TODO
+        pass
 
-    def set_age(self, age: Optional[int]) -> None:
-        """ Set new or reset age
-        :param age: new age or None to reset
+    def set_age(self, age: int) -> None:
+        """ Set new age
+        :param age: new age
         """
-        pass  # TODO
+        self.age = age
+        return None
 
     def get_sex(self) -> str:
         """ get current sex as 'm' or 'f'
         :return: current sex
         """
-        pass  # TODO
+        self.sex = "A"
+        return self.sex
 
-    def set_sex(self, sex: Optional[str]) -> None:
-        """ Set new or reset sex
-        :param sex: new sex as 'm' or 'f' or None to reset
+    def set_sex(self) -> None:
+        """ Set new sex
+        :param sex: new sex as 'm' or 'f'
         """
-        pass  # TODO
+
+        return None
 
     def get_size(self) -> float:
         """ get current size
         :return: current size in meters
         """
-        pass  # TODO
+        return self.size
 
-    def set_size(self, size: float) -> None:
+    def set_size(self) -> None:
         """ Set new size in meters
         :param size: new size
         """
-        pass  # TODO
+        self.size = self.input_size.GetValue()
 
     def get_weight(self) -> float:
         """ get current weight
         :return: current weight in kg
         """
-        pass  # TODO
+        pass # TODO
 
     def set_weight(self, weight: float) -> None:
         """ Set new weight in meters
         :param weight: new weight
         """
-        pass  # TODO
+        self.weight = self.input_weight.GetValue()
 
     def get_ideal_weight(self) -> float:
         """ calculate ideal weight
@@ -69,25 +82,14 @@ class BmiCalc:
         """
         pass  # TODO
 
-
-class BMIprocessing(Panel):
-    def get_inputs(self):
-        size = self.input_size.GetValue()
-        weight = self.input_weight.GetValue()
-        age = self.input_age.GetValue()
-
-    def click_calc( self, event,BMI,Ideal_weight,result ):#Fehler
-        self.output_bewertung.SetLabelMarkup(result)
-        self.output_BMI.SetLabelMarkup(BMI)
-        self.output_idealgewicht.SetLabelMarkup(Ideal_weight)
-
     def click_exit(self, event):
         self.Parent.Destroy()
-        print(self.input_size.GetValue())
 
 
 app = wx.App()
-frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270))
+frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
+               style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 pln = BMIprocessing(frm)
+BMIclac.set_bmi()
 frm.Show()
 app.MainLoop()
