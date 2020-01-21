@@ -4,6 +4,11 @@ import wx
 
 class BMIcalc(Panel):
     """Interface for BMI Calculation"""
+    def __init__(self):
+        self.age = 0
+        self.sex = 0
+        self.size = 0
+        self.weight = 0
 
     def get_bmi(self) -> float:
         """ :return: current BMI """
@@ -19,7 +24,7 @@ class BMIcalc(Panel):
         """ get current age
         :return: current age
         """
-
+        pass
 
     def set_age(self, age: int) -> None:
         """ Set new age
@@ -32,16 +37,14 @@ class BMIcalc(Panel):
         """ get current sex as 'm' or 'f'
         :return: current sex
         """
-        return sex
+        self.sex = "A"
+        return self.sex
 
     def set_sex(self) -> None:
         """ Set new sex
         :param sex: new sex as 'm' or 'f'
         """
-        if self.male_button.GetValue():
-            sex = "MALE"
-        elif self.female_button.GetValue():
-            sex = "FEMALE"
+
         return None
 
     def get_size(self) -> float:
@@ -79,7 +82,8 @@ class BMIcalc(Panel):
 
 
 app = wx.App()
-frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270))
+frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
+               style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 pln = BMIcalc(frm)
 frm.Show()
 app.MainLoop()
