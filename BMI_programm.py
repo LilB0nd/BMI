@@ -1,14 +1,19 @@
 from noname import Panel
 import wx
 
+class BMIclac(Panel):
+    def set_table(self):
+        self.BMItable = (("Untergewicht", ">18.4"), ("Normalgewicht", 18.5, 24.9), ("Übergewicht", 25, 29.9),
+                         ("Starkes Übergewicht(Apdipositas Grad I)", 30, 34.9),("Apdipositas Grad II", 35, 39.9),
+                         ("Adipositas Grad III", ">40"))
+        if self.BMItable[0]:
+            print(self.BMItable)
 
-class BMIcalc(Panel):
+    def set_bmi(self):
+        pass
+
+class BMIprocessing(Panel):
     """Interface for BMI Calculation"""
-    def __init__(self):
-        self.age = 0
-        self.sex = 0
-        self.size = 0
-        self.weight = 0
 
     def get_bmi(self) -> float:
         """ :return: current BMI """
@@ -84,6 +89,7 @@ class BMIcalc(Panel):
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
-pln = BMIcalc(frm)
+pln = BMIprocessing(frm)
+BMIclac.set_bmi()
 frm.Show()
 app.MainLoop()
