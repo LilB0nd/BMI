@@ -22,7 +22,8 @@ class BMIcalculation:
 
     def set_ideal(self):
         for element in self.idealweigt:
-            if self.age > element[0]
+            if self.age > element[0] and self.bmi:
+                print("test")
 
     def set_result(self):
         counter = 1
@@ -33,7 +34,7 @@ class BMIcalculation:
         if self.sex == "female":
             bmitable = self.BMItable["female"]
         for element in bmitable[1:]:
-            if self.bmi > element[1] < element[2]:
+            if self.bmi > element[1] and self.bmi < element[2]:
                 result = counter
             counter = counter + 1
         print(bmitable[result][0])
@@ -50,10 +51,13 @@ class BMIcalculation:
 class BMIprocessing(Panel):
     def get_inputs(self):
         # TODO sEX input
-        size = self.input_size.GetValue()
-        weight = self.input_weight.GetValue()
-        age = self.input_age.GetValue()
-        return [size, weight, age]
+        try:
+            size = float(self.input_size.GetValue())
+            weight = float(self.input_weight.GetValue())
+            age = float(self.input_age.GetValue())
+            return [size, weight, age]
+        except ValueError:
+            print("Bitte geben sie Zahlen ein.")
 
     def click_calc(self, event):
         self.output_bewertung.SetLabelMarkup("Zu Fett")
