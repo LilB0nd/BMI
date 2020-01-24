@@ -6,7 +6,7 @@ class BMIcalculation:
         self.sex = "male"
         self.weight = user_input[1]
         self.size = user_input[0]
-        self.age = user_input[2]
+        #self.age = user_input[2]
         self.BMItable = {"no_sex": (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
                                     ("Übergewicht", 25.0, 29.9),
                                     ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
@@ -22,7 +22,8 @@ class BMIcalculation:
 
     def set_ideal(self):
         for element in self.idealweigt:
-            if self.age > element[0]
+            if self.age > element[0]:
+                pass
 
     def set_result(self):
         counter = 1
@@ -49,15 +50,19 @@ class BMIcalculation:
 
 class BMIprocessing(Panel):
     def get_inputs(self):
-        size = self.input_size.GetValue()
+        if self.input_size.GetValue().isdecimal():
+            size = self.input_size.GetValue()
+        else:
+            self.input_size.SetForegroundColour(wx.Colour(255, 0, 0))
+
         weight = self.input_weight.GetValue()
         age = self.input_age.GetValue()
-        return [size, weight, age]
+        return [weight, age]
 
     def click_calc(self, event):
-        self.output_bewertung.SetLabelMarkup("Zu Fett")
+        self.output_raiting.SetLabelMarkup("Zu Fett")
         self.output_BMI.SetLabelMarkup("over 9000")
-        self.output_idealgewicht.SetLabelMarkup("75")
+        self.output_idealweight.SetLabelMarkup("75")
 
     def click_exit(self, event):
         self.Parent.Destroy()
