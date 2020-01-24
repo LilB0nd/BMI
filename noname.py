@@ -29,13 +29,13 @@ class Panel ( wx.Panel ):
 		Geschlecht = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Geschlecht" ), wx.VERTICAL )
 
 		self.male_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"männlich", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.male_button, 0, wx.ALL, 5 )
+		Geschlecht.Add( self.male_button, 1, wx.ALL, 5 )
 
 		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.female_button, 0, wx.ALL, 5 )
+		Geschlecht.Add( self.female_button, 1, wx.ALL, 5 )
 
-		self.nosex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"RadioBtn", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.nosex_button, 0, wx.ALL, 5 )
+		self.divers_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"divers", wx.DefaultPosition, wx.DefaultSize, 0 )
+		Geschlecht.Add( self.divers_button, 0, wx.ALL, 5 )
 
 
 		input_sizer.Add( Geschlecht, 0, wx.EXPAND, 5 )
@@ -47,12 +47,12 @@ class Panel ( wx.Panel ):
 		self.text_groesse = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Größe:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_groesse.Wrap( -1 )
 
-		groesse_sizer.Add( self.text_groesse, 0, wx.ALIGN_CENTER|wx.ALL, 5 )
+		groesse_sizer.Add( self.text_groesse, 0, wx.ALIGN_CENTER|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
 		self.text_gewicht = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Gewicht:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_gewicht.Wrap( -1 )
 
-		groesse_sizer.Add( self.text_gewicht, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
+		groesse_sizer.Add( self.text_gewicht, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
 
 		self.text_alter = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Alter: ", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_alter.Wrap( -1 )
@@ -101,7 +101,7 @@ class Panel ( wx.Panel ):
 		Personen_sizer.Add( alter_sizer, 0, wx.EXPAND, 5 )
 
 
-		input_sizer.Add( Personen_sizer, 0, wx.ALIGN_BOTTOM, 5 )
+		input_sizer.Add( Personen_sizer, 1, wx.EXPAND, 5 )
 
 
 		main_sizer.Add( input_sizer, 1, wx.EXPAND, 5 )
@@ -115,15 +115,15 @@ class Panel ( wx.Panel ):
 
 		bewertung_sizer.Add( self.text_bewertung, 0, wx.ALL, 5 )
 
-		self.output_bewertung = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.BORDER_SUNKEN )
-		self.output_bewertung.SetLabelMarkup( wx.EmptyString )
-		self.output_bewertung.Wrap( -1 )
+		self.output_raiting = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.BORDER_SUNKEN )
+		self.output_raiting.SetLabelMarkup( wx.EmptyString )
+		self.output_raiting.Wrap( -1 )
 
-		self.output_bewertung.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
-		self.output_bewertung.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
-		self.output_bewertung.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
+		self.output_raiting.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+		self.output_raiting.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+		self.output_raiting.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 
-		bewertung_sizer.Add( self.output_bewertung, 1, wx.ALL, 5 )
+		bewertung_sizer.Add( self.output_raiting, 1, wx.ALL, 5 )
 
 
 		output_sizer.Add( bewertung_sizer, 0, wx.EXPAND, 5 )
@@ -140,15 +140,20 @@ class Panel ( wx.Panel ):
 
 		output_sizer2.Add( self.output_BMI, 1, wx.ALL, 5 )
 
-		self.text_idealgewicht = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"Idealgewicht:", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
-		self.text_idealgewicht.Wrap( -1 )
+		self.text_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"Idealgewicht:", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
+		self.text_idealweight.Wrap( -1 )
 
-		output_sizer2.Add( self.text_idealgewicht, 0, wx.ALL, 5 )
+		output_sizer2.Add( self.text_idealweight, 0, wx.ALL, 5 )
 
-		self.output_idealgewicht = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.BORDER_SUNKEN )
-		self.output_idealgewicht.Wrap( -1 )
+		self.output_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.BORDER_SUNKEN )
+		self.output_idealweight.Wrap( -1 )
 
-		output_sizer2.Add( self.output_idealgewicht, 1, wx.ALL, 5 )
+		output_sizer2.Add( self.output_idealweight, 1, wx.ALL, 5 )
+
+		self.text_idealweight_unit = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"kg", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
+		self.text_idealweight_unit.Wrap( -1 )
+
+		output_sizer2.Add( self.text_idealweight_unit, 0, wx.ALL, 5 )
 
 
 		output_sizer.Add( output_sizer2, 0, wx.EXPAND, 5 )
