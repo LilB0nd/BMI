@@ -65,7 +65,7 @@ class BMIprocessing(Panel):
         size = self.input_size.GetValue()
         weight = self.input_weight.GetValue()
         age = self.input_age.GetValue()
-        return [weight, size, age]
+        return [weight, size, age]#
 
     def set_output(self,info):
         self.raiting = info[0]
