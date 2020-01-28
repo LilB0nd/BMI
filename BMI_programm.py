@@ -1,7 +1,6 @@
 from noname import Panel
 import wx
 
-
 class BMIcalculation:
     def __init__(self, user_input):
         self.sex = "male"
@@ -62,21 +61,20 @@ class BMIcalculation:
 
 class BMIprocessing(Panel):
     def get_inputs(self):
-        print(self.input_size)
-        if self.input_size.GetValue().isnumeric():
-            size = self.input_size.GetValue()
-            self.input_size.SetForegroundColour(wx.Colour(0, 0, 0))
-        else:
-            self.input_size.SetForegroundColour(wx.Colour(255, 0, 0))
-
+        size = self.input_size.GetValue()
         weight = self.input_weight.GetValue()
         age = self.input_age.GetValue()
-        return [weight, age]  # [weight,size, age] in der Reihenfolge bitte
+        return [weight, size, age]
+
+    def set_output(self,info):
+        self.raiting = info[0]
+        self.BMI = info[1]
+        self.idealweight =info[2]
 
     def click_calc(self, event):
-        self.output_raiting.SetLabelMarkup("Zu Fett")
-        self.output_BMI.SetLabelMarkup("over 9000")
-        self.output_idealweight.SetLabelMarkup("75")
+        self.output_raiting.SetLabelMarkup(self.raiting)
+        self.output_BMI.SetLabelMarkup(self.BMI)
+        self.output_idealweight.SetLabelMarkup( self.idealweight)
 
     def click_exit(self, event):
         self.Parent.Destroy()
@@ -88,6 +86,13 @@ frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
 pln = BMIprocessing(frm)
 input = BMIprocessing.get_inputs(pln)
 BMIcalc = BMIcalculation(input)
+BMIcalc.set_bmi()
+BMIcalc.set_result()
+BMIcalc.set_ideal()
+info = [BMIcalc.get_result(),BMIcalc.get_bmi(),BMIcalc.get_ideal()]
+pln.set_output(info)
+
+
 
 frm.Show()
 app.MainLoop()
