@@ -50,8 +50,10 @@ class BMIcalculation:
 
 class BMIprocessing(Panel):
     def get_inputs(self):
-        if self.input_size.GetValue().isdecimal():
+        print(self.input_size)
+        if self.input_size.GetValue().isnumeric():
             size = self.input_size.GetValue()
+            self.input_size.SetForegroundColour(wx.Colour(0, 0, 0))
         else:
             self.input_size.SetForegroundColour(wx.Colour(255, 0, 0))
 
