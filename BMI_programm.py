@@ -5,9 +5,9 @@ import wx
 class BMIcalculation:
     def __init__(self, user_input):
         self.sex = "male"
-        self.weight = user_input[1]
-        self.size = user_input[0]
-        # self.age = user_input[2]
+        self.weight = int(user_input[1])
+        self.size = int(user_input[0])
+        self.age = int(user_input[2])
         self.idealweight = None
         self.idealweight_low = None
         self.idealweight_high = None
@@ -88,6 +88,5 @@ frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
 pln = BMIprocessing(frm)
 input = BMIprocessing.get_inputs(pln)
 BMIcalc = BMIcalculation(input)
-
 frm.Show()
 app.MainLoop()

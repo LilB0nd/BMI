@@ -64,13 +64,13 @@ class Panel ( wx.Panel ):
 
 		gewicht_sizer = wx.BoxSizer( wx.VERTICAL )
 
-		self.input_size = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.input_size = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
 		gewicht_sizer.Add( self.input_size, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
-		self.input_weight = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.input_weight = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
 		gewicht_sizer.Add( self.input_weight, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
-		self.input_age = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.input_age = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
 		gewicht_sizer.Add( self.input_age, 1, wx.ALL, 5 )
 
 
