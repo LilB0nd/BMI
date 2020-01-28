@@ -16,8 +16,8 @@ class BMIcalculation:
                                      ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
                                      ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 1000.0))}
 
-        self.idealweight_table = ((19.0, 24.0, 19.0, 24.0), (25, 34, 20, 25), (35, 44, 21, 26), (45, 54, 23, 28),
-                                  (65, 130, 24, 29))
+        self.idealweight_table = ((19, 24, 19.0, 24.0), (25, 34, 20.0, 25.0), (35, 44, 21.0, 26.0),
+                                   (45, 54, 23.0, 28.0),(65, 130, 24.0, 29.0))
 
     def set_ideal(self) -> None:
         for element in self.idealweight_table:
@@ -25,6 +25,7 @@ class BMIcalculation:
                 self.idealweight_low = self.size**2 * element[2]
                 self.idealweight_high = self.size**2 * element[3]
                 self.idealweight = round((self.idealweight_low + self.idealweight_high)/2, 1)
+
 
     def get_ideal(self) -> float:
         return self.idealweight
@@ -35,7 +36,7 @@ class BMIcalculation:
         bmitable = self.BMI_table["no_sex"]
         if self.sex == "male":
             bmitable = self.BMI_table["male"]
-        if self.sex == "female":
+        elif self.sex == "female":
             bmitable = self.BMI_table["female"]
         for element in bmitable[1:]:
             if self.bmi >= element[1] and self.bmi <= element[2]:
@@ -49,13 +50,22 @@ class BMIcalculation:
     def set_bmi(self):
         self.bmi = round(self.weight / (self.size**2), 1)
 
+check = None
+while not check:
+    try:
+        sex = str(input("Sex: "))
+        weight = float(input("Weight in kg: "))
+        size = ((float(input("Size in cm: "))) / 100)
+        age = float(input("Alter in Jahren: "))
+        check = True
+    except ValueError:
+        print("Bitte geben sie beim Gewicht, größe und Alter eine Zahl ein \n")
 
-
-sex = str(input("Sex: "))
-weight = float(input("Weight in kg: "))
-size = ((float(input("Size in cm: "))) / 100)
-age = float(input("Alter in Jahren: "))
 BMI = BMIcalculation(sex, weight, size, age)
 BMI.set_bmi()
 BMI.set_result()
 BMI.set_ideal()
+result = BMI.get_result()
+idealweight = BMI.get_ideal()
+print(result)
+print(idealweight, "kg")
