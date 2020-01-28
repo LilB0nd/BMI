@@ -59,7 +59,7 @@ class BMIprocessing(Panel):
 
         weight = self.input_weight.GetValue()
         age = self.input_age.GetValue()
-        return [weight, age]
+        return [weight, age]i
 
     def click_calc(self, event):
         self.output_raiting.SetLabelMarkup("Zu Fett")
