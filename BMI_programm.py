@@ -61,16 +61,18 @@ class BMIcalculation:
 
 
 class BMIprocessing(Panel):
-    def get_inputs(self):
-        size = self.input_size.GetValue()
-        weight = self.input_weight.GetValue()
-        age = self.input_age.GetValue()
-        return [weight, size, age]#
+    def super__init__(self):
+        self.size = None
+        self.weight = None
+        self.age = None
 
-    def set_output(self,info):
+    def get_inputs(self):
+        return [self.weight, self.size, self.age]
+
+    def set_output(self, info):
         self.raiting = info[0]
         self.BMI = info[1]
-        self.idealweight =info[2]
+        self.idealweight = info[2]
 
     def click_calc(self, event):
         self.output_raiting.SetLabelMarkup(self.raiting)
@@ -79,21 +81,50 @@ class BMIprocessing(Panel):
 
     def click_exit(self, event):
         self.Parent.Destroy()
+        exit()
+
+    def on_size_input(self, event):
+    # Zurück zu schwarz macen
+        try:
+            self.size = float(self.input_size.GetValue())
+            self.input_size.SetForegroundColour(wx.BLACK)
+        except ValueError:
+            self.input_size.SetForegroundColour(wx.RED)  # set text color
+
+
+    def on_weight_input(self, event):
+        # Zurück zu schwarz macen
+        try:
+            self.weight = int(self.input_weight.GetValue())
+            self.input_weight.SetForegroundColour(wx.BLACK)
+        except ValueError:
+            self.input_weight.SetForegroundColour(wx.RED)
+
+    def on_age_size(self, event):
+        # Zurück zu schwarz macen
+        try:
+            self.size = int(self.input_size.GetValue())
+            self.input_size.SetForegroundColour(wx.BLACK)
+        except ValueError:
+            self.input_size.SetForegroundColour(wx.RED)
 
 
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(350, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 pln = BMIprocessing(frm)
+frm.Show()
+app.MainLoop()
+
 input = BMIprocessing.get_inputs(pln)
 BMIcalc = BMIcalculation(input)
 BMIcalc.set_bmi()
 BMIcalc.set_result()
 BMIcalc.set_ideal()
-info = [BMIcalc.get_result(),BMIcalc.get_bmi(),BMIcalc.get_ideal()]
+info = [BMIcalc.get_result(), BMIcalc.get_bmi(), BMIcalc.get_ideal()]
 pln.set_output(info)
 
 
 
-frm.Show()
-app.MainLoop()
+
+

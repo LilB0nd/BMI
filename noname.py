@@ -180,6 +180,9 @@ class Panel ( wx.Panel ):
 		self.Layout()
 
 		# Connect Events
+		self.input_size.Bind( wx.EVT_TEXT, self.on_size_input )
+		self.input_weight.Bind( wx.EVT_TEXT, self.on_weight_input )
+		self.input_age.Bind( wx.EVT_TEXT, self.on_age_size )
 		self.button_exit.Bind( wx.EVT_BUTTON, self.click_exit )
 		self.button_clac.Bind( wx.EVT_BUTTON, self.click_calc )
 
@@ -188,6 +191,15 @@ class Panel ( wx.Panel ):
 
 
 	# Virtual event handlers, overide them in your derived class
+	def on_size_input( self, event ):
+		event.Skip()
+
+	def on_weight_input( self, event ):
+		event.Skip()
+
+	def on_age_size( self, event ):
+		event.Skip()
+
 	def click_exit( self, event ):
 		event.Skip()
 

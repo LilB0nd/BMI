@@ -57,7 +57,9 @@ while not check:
         weight = float(input("Weight in kg: "))
         size = ((float(input("Size in cm: "))) / 100)
         age = float(input("Alter in Jahren: "))
+
         check = True
+
     except ValueError:
         print("Bitte geben sie beim Gewicht, größe und Alter eine Zahl ein \n")
 
