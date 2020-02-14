@@ -138,6 +138,8 @@ class Panel ( wx.Panel ):
 		self.output_BMI = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.BORDER_SUNKEN )
 		self.output_BMI.Wrap( -1 )
 
+		self.output_BMI.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+
 		output_sizer2.Add( self.output_BMI, 1, wx.ALL, 5 )
 
 		self.text_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"Idealgewicht:", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
@@ -182,7 +184,7 @@ class Panel ( wx.Panel ):
 		# Connect Events
 		self.input_size.Bind( wx.EVT_TEXT, self.on_size_input )
 		self.input_weight.Bind( wx.EVT_TEXT, self.on_weight_input )
-		self.input_age.Bind( wx.EVT_TEXT, self.on_age_size )
+		self.input_age.Bind( wx.EVT_TEXT, self.on_age_input )
 		self.button_exit.Bind( wx.EVT_BUTTON, self.click_exit )
 		self.button_clac.Bind( wx.EVT_BUTTON, self.click_calc )
 
@@ -197,7 +199,7 @@ class Panel ( wx.Panel ):
 	def on_weight_input( self, event ):
 		event.Skip()
 
-	def on_age_size( self, event ):
+	def on_age_input( self, event ):
 		event.Skip()
 
 	def click_exit( self, event ):

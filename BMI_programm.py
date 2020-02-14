@@ -69,12 +69,14 @@ class BMIprocessing(Panel):
     def get_inputs(self):
         return [self.weight, self.size, self.age]
 
-    def set_output(self, info):
+    def set_output(self):
+
         self.raiting = info[0]
         self.BMI = info[1]
         self.idealweight = info[2]
 
     def click_calc(self, event):
+        self.set_output()
         self.output_raiting.SetLabelMarkup(self.raiting)
         self.output_BMI.SetLabelMarkup(self.BMI)
         self.output_idealweight.SetLabelMarkup( self.idealweight)
@@ -89,7 +91,11 @@ class BMIprocessing(Panel):
             self.size = float(self.input_size.GetValue())
             self.input_size.SetForegroundColour(wx.BLACK)
         except ValueError:
-            self.input_size.SetForegroundColour(wx.RED)  # set text color
+            try:
+                self.size = float(self.input_size.GetValue())
+                self.input_size.SetForegroundColour(wx.BLACK)
+            except ValueError:
+                self.input_size.SetForegroundColour(wx.RED)  # set text color
 
 
     def on_weight_input(self, event):
@@ -100,11 +106,12 @@ class BMIprocessing(Panel):
         except ValueError:
             self.input_weight.SetForegroundColour(wx.RED)
 
-    def on_age_size(self, event):
+    def on_age_input(self, event):
         # Zurück zu schwarz macen
         try:
-            self.size = int(self.input_size.GetValue())
             self.input_size.SetForegroundColour(wx.BLACK)
+            self.size = int(self.input_size.GetValue())
+
         except ValueError:
             self.input_size.SetForegroundColour(wx.RED)
 
@@ -121,9 +128,8 @@ BMIcalc = BMIcalculation(input)
 BMIcalc.set_bmi()
 BMIcalc.set_result()
 BMIcalc.set_ideal()
+pln.set_output()
 info = [BMIcalc.get_result(), BMIcalc.get_bmi(), BMIcalc.get_ideal()]
-pln.set_output(info)
-
 
 
 

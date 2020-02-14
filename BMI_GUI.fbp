@@ -546,6 +546,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
+                                                <event name="OnText">on_size_input</event>
                                             </object>
                                         </object>
                                         <object class="sizeritem" expanded="0">
@@ -610,6 +611,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
+                                                <event name="OnText">on_weight_input</event>
                                             </object>
                                         </object>
                                         <object class="sizeritem" expanded="1">
@@ -674,6 +676,7 @@
                                                 <property name="window_extra_style"></property>
                                                 <property name="window_name"></property>
                                                 <property name="window_style"></property>
+                                                <event name="OnText">on_age_input</event>
                                             </object>
                                         </object>
                                     </object>
@@ -1054,7 +1057,7 @@
                                         <property name="aui_position"></property>
                                         <property name="aui_row"></property>
                                         <property name="best_size"></property>
-                                        <property name="bg"></property>
+                                        <property name="bg">wxSYS_COLOUR_WINDOW</property>
                                         <property name="caption"></property>
                                         <property name="caption_visible">1</property>
                                         <property name="center_pane">0</property>
