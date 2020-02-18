@@ -24,7 +24,7 @@ class BMIcalculation:
                                   (65, 130, 24, 29))
 
     def set_size(self, size: float) -> None:
-        self.size = size
+        self.size = size/100
         return None
 
     def get_size(self) -> float:
@@ -52,7 +52,7 @@ class BMIcalculation:
         return self.sex
 
     def set_bmi(self) -> None:
-        self.bmi = round(self.weight/((self.size/100)**2), 1)
+        self.bmi = round(self.weight/(self.size**2), 1)
 
     def get_bmi(self) -> float:
         return self.bmi

@@ -64,13 +64,13 @@ class Panel ( wx.Panel ):
 
 		gewicht_sizer = wx.BoxSizer( wx.VERTICAL )
 
-		self.input_size = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
+		self.input_size = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_RIGHT )
 		gewicht_sizer.Add( self.input_size, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
-		self.input_weight = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
-		gewicht_sizer.Add( self.input_weight, 0, wx.ALL, 5 )
+		self.input_weight = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_RIGHT )
+		gewicht_sizer.Add( self.input_weight, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
-		self.input_age = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
+		self.input_age = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_RIGHT )
 		gewicht_sizer.Add( self.input_age, 1, wx.ALL, 5 )
 
 
@@ -115,15 +115,15 @@ class Panel ( wx.Panel ):
 
 		bewertung_sizer.Add( self.text_bewertung, 0, wx.ALL, 5 )
 
-		self.output_raiting = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.BORDER_SUNKEN )
+		self.output_raiting = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.ST_ELLIPSIZE_MIDDLE|wx.BORDER_SUNKEN )
 		self.output_raiting.SetLabelMarkup( wx.EmptyString )
 		self.output_raiting.Wrap( -1 )
 
 		self.output_raiting.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
-		self.output_raiting.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+		self.output_raiting.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
 		self.output_raiting.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 
-		bewertung_sizer.Add( self.output_raiting, 1, wx.ALL, 5 )
+		bewertung_sizer.Add( self.output_raiting, 1, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
 
 
 		output_sizer.Add( bewertung_sizer, 0, wx.EXPAND, 5 )
@@ -135,22 +135,24 @@ class Panel ( wx.Panel ):
 
 		output_sizer2.Add( self.text_BMI, 0, wx.ALL, 5 )
 
-		self.output_BMI = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.BORDER_SUNKEN )
+		self.output_BMI = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT|wx.ST_ELLIPSIZE_MIDDLE|wx.BORDER_SUNKEN )
 		self.output_BMI.Wrap( -1 )
 
-		self.output_BMI.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+		self.output_BMI.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 
-		output_sizer2.Add( self.output_BMI, 1, wx.ALL, 5 )
+		output_sizer2.Add( self.output_BMI, 1, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
 
 		self.text_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"Idealgewicht:", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
 		self.text_idealweight.Wrap( -1 )
 
 		output_sizer2.Add( self.text_idealweight, 0, wx.ALL, 5 )
 
-		self.output_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0|wx.BORDER_SUNKEN )
+		self.output_idealweight = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT|wx.ST_ELLIPSIZE_MIDDLE|wx.BORDER_SUNKEN )
 		self.output_idealweight.Wrap( -1 )
 
-		output_sizer2.Add( self.output_idealweight, 1, wx.ALL, 5 )
+		self.output_idealweight.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
+
+		output_sizer2.Add( self.output_idealweight, 1, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
 
 		self.text_idealweight_unit = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, u"kg", wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_RIGHT )
 		self.text_idealweight_unit.Wrap( -1 )
@@ -182,7 +184,7 @@ class Panel ( wx.Panel ):
 		self.Layout()
 
 		# Connect Events
-		self.input_size.Bind( wx.EVT_KEY_UP, self.on_size_input )
+		self.input_size.Bind( wx.EVT_TEXT, self.on_size_input )
 		self.input_weight.Bind( wx.EVT_TEXT, self.on_weight_input )
 		self.input_age.Bind( wx.EVT_TEXT, self.on_age_input )
 		self.button_exit.Bind( wx.EVT_BUTTON, self.click_exit )
