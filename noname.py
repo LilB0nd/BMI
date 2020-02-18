@@ -16,11 +16,11 @@ import wx.xrc
 
 class Panel ( wx.Panel ):
 
-	def __init__( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 340,240 ), style = wx.TAB_TRAVERSAL, name = wx.EmptyString ):
+	def __init__( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 350,240 ), style = wx.TAB_TRAVERSAL, name = wx.EmptyString ):
 		wx.Panel.__init__ ( self, parent, id = id, pos = pos, size = size, style = style, name = name )
 
-		self.SetMinSize( wx.Size( 340,240 ) )
-		self.SetMaxSize( wx.Size( 340,240 ) )
+		self.SetMinSize( wx.Size( 350,240 ) )
+		self.SetMaxSize( wx.Size( 350,240 ) )
 
 		main_sizer = wx.BoxSizer( wx.VERTICAL )
 
@@ -34,8 +34,8 @@ class Panel ( wx.Panel ):
 		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.female_button, 1, wx.ALL, 5 )
 
-		self.divers_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"divers", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.divers_button, 0, wx.ALL, 5 )
+		self.no_sex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"keine Angabe", wx.DefaultPosition, wx.DefaultSize, 0 )
+		Geschlecht.Add( self.no_sex_button, 1, wx.ALL, 5 )
 
 
 		input_sizer.Add( Geschlecht, 0, wx.EXPAND, 5 )
@@ -68,7 +68,7 @@ class Panel ( wx.Panel ):
 		gewicht_sizer.Add( self.input_size, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
 		self.input_weight = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
-		gewicht_sizer.Add( self.input_weight, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		gewicht_sizer.Add( self.input_weight, 0, wx.ALL, 5 )
 
 		self.input_age = wx.TextCtrl( Personen_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTER )
 		gewicht_sizer.Add( self.input_age, 1, wx.ALL, 5 )
@@ -182,7 +182,7 @@ class Panel ( wx.Panel ):
 		self.Layout()
 
 		# Connect Events
-		self.input_size.Bind( wx.EVT_TEXT, self.on_size_input )
+		self.input_size.Bind( wx.EVT_KEY_UP, self.on_size_input )
 		self.input_weight.Bind( wx.EVT_TEXT, self.on_weight_input )
 		self.input_age.Bind( wx.EVT_TEXT, self.on_age_input )
 		self.button_exit.Bind( wx.EVT_BUTTON, self.click_exit )
