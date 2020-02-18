@@ -93,8 +93,6 @@ class BMIcalculation:
 
 class BMIprocessing(Panel):
 
-    def get_inputs(self):
-        return [self.weight, self.size, self.age]
 
     def set_output(self):
         self.category = self.BMIcalc.get_category()
@@ -102,51 +100,49 @@ class BMIprocessing(Panel):
         self.idealweight = self.BMIcalc.get_ideal()
 
     def click_calc(self, event):
-        self.BMIcalc = BMIcalculation()
-        self.BMIcalc.get_bmi()
+
         print(self.category)
         self.output_raiting.SetLabelMarkup(self.category)
         self.output_BMI.SetLabelMarkup(self.BMI)
-        self.output_idealweight.SetLabelMarkup( self.idealweight)
+        self.output_idealweight.SetLabelMarkup(self.idealweight)
 
     def click_exit(self, event):
         self.Destroy()
         exit()
 
     def on_size_input(self, event):
-    # Zurück zu schwarz macen
-        self.input_size.SetForegroundColour(wx.BLACK)
         try:
+            self.input_size.SetForegroundColour(wx.BLACK)
             input_size = float(self.input_size.GetValue())
-            BMIcalc.set_size(size = input_size)
+            #self.BMIcalc.set_size(size=input_size)
         except ValueError:
             self.input_size.SetForegroundColour(wx.RED)
-              # set text color
-        event.Skip()
+        self.input_size.Refresh()
 
     def on_weight_input(self, event):
-        # Zurück zu schwarz machen
         try:
             self.input_weight.SetForegroundColour(wx.BLACK)
-            self.weight = int(self.input_weight.GetValue())
+            input_weight = int(self.input_weight.GetValue())
+            #self.BMIcalc.set_weight(weight=input_weight)
         except ValueError:
             self.input_weight.SetForegroundColour(wx.RED)
+        self.input_weight.Refresh()
 
     def on_age_input(self, event):
-        # Zurück zu schwarz machen
         try:
             self.input_age.SetForegroundColour(wx.BLACK)
             self.age = int(self.input_age.GetValue())
 
         except ValueError:
             self.input_age.SetForegroundColour(wx.RED)
-
+        self.input_age.Refresh()
 
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(360, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
-pln = BMIprocessing(frm)
 BMIcalc = BMIcalculation()
+pln = BMIprocessing(frm)
+
 frm.Show()
 app.MainLoop()
 
