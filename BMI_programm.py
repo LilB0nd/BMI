@@ -5,14 +5,9 @@ from typing import Optional
 
 class BMIcalculation:
     def __init__(self):
-        self.idealweight = None
-        self.idealweight_low = None
-        self.idealweight_high = None
-        self.bmi = None
-        self.category = None
         self.BMItable = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
                                 ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
-                                ("Apdipositas Grad II", 35.0, 39.9),("Adipositas Grad III", 40.0, 200.0)),
+                                ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
                          "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 24.9),
                                   ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
                                   ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
@@ -20,8 +15,7 @@ class BMIcalculation:
                                     ("Übergewicht", 24.0, 29.9),
                                     ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
                                     ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))}
-        self.idealweight_table = ((19, 24, 19, 24), (25, 34, 20, 25), (35, 44, 21, 26), (45, 54, 23, 28),
-                                  (65, 130, 24, 29))
+
 
     def set_size(self, size: float) -> None:
         self.size = size/100
@@ -58,15 +52,24 @@ class BMIcalculation:
         return self.bmi
 
     def set_category(self) -> None:
+        BMItable = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
+                           ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
+                           ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                    "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 24.9),
+                             ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
+                             ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                    "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 23.9),
+                               ("Übergewicht", 24.0, 29.9),
+                               ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
+                               ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))}
         counter = 1
         result = 0
         self.sex = "male"
-
-        bmitable = self.BMItable[None]
+        bmitable = BMItable[None]
         if self.sex == "male":
-            bmitable = self.BMItable["male"]
+            bmitable = BMItable["male"]
         if self.sex == "female":
-            bmitable = self.BMItable["female"]
+            bmitable = BMItable["female"]
         for element in bmitable[1:]:
             if self.bmi > element[1] and self.bmi < element[2]:
                 result = counter
@@ -77,11 +80,13 @@ class BMIcalculation:
         return self.category
 
     def set_ideal(self) -> None:
-        for element in self.idealweight_table:
+        idealweight_table = ((19, 24, 19, 24), (25, 34, 20, 25), (35, 44, 21, 26), (45, 54, 23, 28),
+                             (65, 130, 24, 29))
+        for element in idealweight_table:
             if self.age >= element[0] and self.age <= element[1]:
-                self.idealweight_low = self.size**2 * element[2]
-                self.idealweight_high = self.size**2 * element[3]
-                self.idealweight = round((self.idealweight_low + self.idealweight_high)/2, 1)
+                idealweight_low = self.size**2 * element[2]
+                idealweight_high = self.size**2 * element[3]
+                self.idealweight = round((idealweight_low + idealweight_high)/2, 1)
         return None
 
     def get_ideal(self) -> float:
