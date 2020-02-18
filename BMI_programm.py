@@ -4,13 +4,12 @@ from typing import Optional
 
 
 class BMIcalculation:
-
     def __init__(self):
         self.idealweight = None
         self.idealweight_low = None
         self.idealweight_high = None
         self.bmi = None
-        self.result = None
+        self.category = None
         self.BMItable = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
                                 ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
                                 ("Apdipositas Grad II", 35.0, 39.9),("Adipositas Grad III", 40.0, 200.0)),
@@ -26,7 +25,6 @@ class BMIcalculation:
 
     def set_size(self, size: float) -> None:
         self.size = size
-        print(size)
         return None
 
     def get_size(self) -> float:
@@ -34,7 +32,6 @@ class BMIcalculation:
 
     def set_age(self, age: Optional[int]) -> None:
         self.age = age
-        print(age)
         return None
 
     def get_age(self) -> int:
@@ -55,8 +52,7 @@ class BMIcalculation:
         return self.sex
 
     def set_bmi(self) -> None:
-        self.bmi = round(self.weight/(self.size**2), 1)
-        return None
+        self.bmi = round(self.weight/((self.size/100)**2), 1)
 
     def get_bmi(self) -> float:
         return self.bmi
@@ -64,7 +60,9 @@ class BMIcalculation:
     def set_category(self) -> None:
         counter = 1
         result = 0
-        bmitable = self.BMItable["no_sex"]
+        self.sex = "male"
+
+        bmitable = self.BMItable[None]
         if self.sex == "male":
             bmitable = self.BMItable["male"]
         if self.sex == "female":
@@ -73,11 +71,10 @@ class BMIcalculation:
             if self.bmi > element[1] and self.bmi < element[2]:
                 result = counter
             counter = counter + 1
-        self.result = bmitable[result][0]
-        return None
+        self.category = bmitable[result][0]
 
     def get_category(self) -> str:
-        return self.result
+        return self.category
 
     def set_ideal(self) -> None:
         for element in self.idealweight_table:
@@ -92,19 +89,19 @@ class BMIcalculation:
 
 
 class BMIprocessing(Panel):
-
-
-    def set_output(self):
-        self.category = self.BMIcalc.get_category()
-        self.BMI = self.BMIcalc.get_bmi()
-        self.idealweight = self.BMIcalc.get_ideal()
+    def my_init_(self, BMIcalc):
+        self.BMIcalc = BMIcalc
 
     def click_calc(self, event):
-
-        print(self.category)
-        self.output_raiting.SetLabelMarkup(self.category)
-        self.output_BMI.SetLabelMarkup(self.BMI)
-        self.output_idealweight.SetLabelMarkup(self.idealweight)
+        self.BMIcalc.set_bmi()
+        self.BMIcalc.set_category()
+        self.BMIcalc.set_ideal()
+        category = self.BMIcalc.get_category()
+        bmi = str(self.BMIcalc.get_bmi())
+        ideal = str(self.BMIcalc.get_ideal())
+        self.output_raiting.SetLabelMarkup(category)
+        self.output_BMI.SetLabelMarkup(bmi)
+        self.output_idealweight.SetLabelMarkup(ideal)
 
     def click_exit(self, event):
         self.Destroy()
@@ -114,7 +111,7 @@ class BMIprocessing(Panel):
         try:
             self.input_size.SetForegroundColour(wx.BLACK)
             input_size = float(self.input_size.GetValue())
-            #self.BMIcalc.set_size(size=input_size)
+            self.BMIcalc.set_size(size=input_size)
         except ValueError:
             self.input_size.SetForegroundColour(wx.RED)
         self.input_size.Refresh()
@@ -123,7 +120,7 @@ class BMIprocessing(Panel):
         try:
             self.input_weight.SetForegroundColour(wx.BLACK)
             input_weight = int(self.input_weight.GetValue())
-            #self.BMIcalc.set_weight(weight=input_weight)
+            self.BMIcalc.set_weight(weight=input_weight)
         except ValueError:
             self.input_weight.SetForegroundColour(wx.RED)
         self.input_weight.Refresh()
@@ -131,18 +128,20 @@ class BMIprocessing(Panel):
     def on_age_input(self, event):
         try:
             self.input_age.SetForegroundColour(wx.BLACK)
-            self.age = int(self.input_age.GetValue())
+            input_age = int(self.input_age.GetValue())
+            self.BMIcalc.set_age(age=input_age)
 
         except ValueError:
             self.input_age.SetForegroundColour(wx.RED)
         self.input_age.Refresh()
+
 
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(360, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 BMIcalc = BMIcalculation()
 pln = BMIprocessing(frm)
-
+pln.my_init_(BMIcalc)
 frm.Show()
 app.MainLoop()
 
