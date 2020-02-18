@@ -53,9 +53,6 @@ class BMIcalculation:
 
     def set_bmi(self) -> None:
         self.bmi = round(self.weight/((self.size/100)**2), 1)
-        print(self.weight)
-        print(self.size)
-        print(self.bmi)
 
     def get_bmi(self) -> float:
         return self.bmi
