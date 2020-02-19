@@ -74,6 +74,10 @@ class BMIcalculation:
                 idealweight_low = self.size**2 * element[2]
                 idealweight_high = self.size**2 * element[3]
                 self.idealweight = round((idealweight_low + idealweight_high)/2, 1)
+        else:
+            idealweight_low = self.size**2 *25
+            idealweight_high = self.size**2 * 34
+            self.idealweight = round(idealweight_low + idealweight_high/2, 1)
         return None
 
     def get_ideal(self) -> float:
@@ -111,7 +115,7 @@ class BMIprocessing(Panel):
     def on_weight_input(self, event):
         try:
             self.input_weight.SetForegroundColour(wx.BLACK)
-            input_weight = int(self.input_weight.GetValue())
+            input_weight = float(self.input_weight.GetValue())
             self.BMIcalc.set_weight(weight=input_weight)
         except ValueError:
             self.input_weight.SetForegroundColour(wx.RED)
@@ -119,6 +123,7 @@ class BMIprocessing(Panel):
 
     def on_age_input(self, event):
         try:
+            print(self.input_age.GetLineLength(self.input_age, 0))
             self.input_age.SetForegroundColour(wx.BLACK)
             input_age = int(self.input_age.GetValue())
             self.BMIcalc.set_age(age=input_age)
