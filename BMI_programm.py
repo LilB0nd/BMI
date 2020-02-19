@@ -12,6 +12,7 @@ class BMIcalculation:
         return self.size
 
     def set_age(self, age: Optional[int]) -> None:
+        print("TEST:" + age)
         self.age = age
         return None
 
@@ -81,7 +82,7 @@ class BMIcalculation:
         return None
 
     def get_ideal(self) -> float:
-        return self.idealweight
+       return self.idealweight
 
 
 class BMIprocessing(Panel):
@@ -89,15 +90,16 @@ class BMIprocessing(Panel):
         self.BMIcalc = BMIcalc
 
     def click_calc(self, event):
+
         self.BMIcalc.set_bmi()
         self.BMIcalc.set_category()
-        self.BMIcalc.set_ideal()
+        #self.BMIcalc.set_ideal()
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
-        ideal = str(self.BMIcalc.get_ideal())
+        #ideal = str(self.BMIcalc.get_ideal())
         self.output_raiting.SetLabelMarkup(category)
         self.output_BMI.SetLabelMarkup(bmi)
-        self.output_idealweight.SetLabelMarkup(ideal)
+        #self.output_idealweight.SetLabelMarkup(ideal)
 
     def click_exit(self, event):
         self.Destroy()
@@ -123,7 +125,6 @@ class BMIprocessing(Panel):
 
     def on_age_input(self, event):
         try:
-            print(self.input_age.GetLineLength(self.input_age, 0))
             self.input_age.SetForegroundColour(wx.BLACK)
             input_age = int(self.input_age.GetValue())
             self.BMIcalc.set_age(age=input_age)
