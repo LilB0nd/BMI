@@ -4,34 +4,25 @@ from typing import Optional
 
 
 class BMIcalculation:
+    def __init__(self):
+        self.age = None
+
     def set_size(self, size: float) -> None:
         self.size = size/100
         return None
 
-    def get_size(self) -> float:
-        return self.size
-
     def set_age(self, age: Optional[int]) -> None:
-        print("TEST:" + age)
+        print(age)
         self.age = age
         return None
-
-    def get_age(self) -> int:
-        return self.age
 
     def set_weight(self, weight: float) -> None:
         self.weight = weight
         return None
 
-    def get_weight(self) -> float:
-        return self.weight
-
     def set_sex(self, sex: Optional[str]) -> None:
         self.sex = sex
         return None
-
-    def get_sex(self) -> str:
-        return self.sex
 
     def set_bmi(self) -> None:
         self.bmi = round(self.weight/(self.size**2), 1)
@@ -88,6 +79,7 @@ class BMIcalculation:
 class BMIprocessing(Panel):
     def my_init_(self, BMIcalc):
         self.BMIcalc = BMIcalc
+        self.age_input = None
 
     def click_calc(self, event):
 
@@ -125,9 +117,11 @@ class BMIprocessing(Panel):
 
     def on_age_input(self, event):
         try:
+            #if self.age_input == int(self.input_age.GetValue()):
+            #    self.BMIcalc.set_age(age=None)
             self.input_age.SetForegroundColour(wx.BLACK)
-            input_age = int(self.input_age.GetValue())
-            self.BMIcalc.set_age(age=input_age)
+            self.age_input = int(self.input_age.GetValue())
+            self.BMIcalc.set_age(age=self.age_input)
 
         except ValueError:
             self.input_age.SetForegroundColour(wx.RED)
