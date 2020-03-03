@@ -8,11 +8,10 @@ class BMIcalculation:
         self.age = None
 
     def set_size(self, size: float) -> None:
-        self.size = size/100
+        self.size = size / 100
         return None
 
     def set_age(self, age: Optional[int]) -> None:
-        print(age)
         self.age = age
         return None
 
@@ -21,11 +20,12 @@ class BMIcalculation:
         return None
 
     def set_sex(self, sex: Optional[str]) -> None:
+        print(sex)
         self.sex = sex
         return None
 
     def set_bmi(self) -> None:
-        self.bmi = round(self.weight/(self.size**2), 1)
+        self.bmi = round(self.weight / (self.size ** 2), 1)
 
     def get_bmi(self) -> float:
         return self.bmi
@@ -63,35 +63,50 @@ class BMIcalculation:
                              (65, 130, 24, 29))
         for element in idealweight_table:
             if self.age >= element[0] and self.age <= element[1]:
-                idealweight_low = self.size**2 * element[2]
-                idealweight_high = self.size**2 * element[3]
-                self.idealweight = round((idealweight_low + idealweight_high)/2, 1)
+                idealweight_low = self.size ** 2 * element[2]
+                idealweight_high = self.size ** 2 * element[3]
+                self.idealweight = round((idealweight_low + idealweight_high) / 2, 1)
         else:
-            idealweight_low = self.size**2 *25
-            idealweight_high = self.size**2 * 34
-            self.idealweight = round(idealweight_low + idealweight_high/2, 1)
+            idealweight_low = self.size ** 2 * 25
+            idealweight_high = self.size ** 2 * 34
+            self.idealweight = round(idealweight_low + idealweight_high / 2, 1)
         return None
 
     def get_ideal(self) -> float:
-       return self.idealweight
+        return self.idealweight
 
 
 class BMIprocessing(Panel):
-    def my_init_(self, BMIcalc):
+    def __init__(self, BMIcalc, parent):
+        super().__init__(parent)
         self.BMIcalc = BMIcalc
         self.age_input = None
 
-    def click_calc(self, event):
+    def sex_button(self):
+        if self.male_button.GetValue() == True:
+            sex = "male"
 
+        elif self.female_button.GetValue() == True:
+            sex = "female"
+
+        elif self.no_sex_button.GetValue() == True:
+            sex = None
+
+        self.BMIcalc.set_sex(sex)
+
+    def click_calc(self, event):
+        self.sex_button()
         self.BMIcalc.set_bmi()
         self.BMIcalc.set_category()
-        #self.BMIcalc.set_ideal()
+        self.BMIcalc.set_ideal()
+
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
-        #ideal = str(self.BMIcalc.get_ideal())
+        ideal = str(self.BMIcalc.get_ideal())
+
         self.output_raiting.SetLabelMarkup(category)
         self.output_BMI.SetLabelMarkup(bmi)
-        #self.output_idealweight.SetLabelMarkup(ideal)
+        self.output_idealweight.SetLabelMarkup(ideal)
 
     def click_exit(self, event):
         self.Destroy()
@@ -117,11 +132,9 @@ class BMIprocessing(Panel):
 
     def on_age_input(self, event):
         try:
-            #if self.age_input == int(self.input_age.GetValue()):
-            #    self.BMIcalc.set_age(age=None)
             self.input_age.SetForegroundColour(wx.BLACK)
-            self.age_input = int(self.input_age.GetValue())
-            self.BMIcalc.set_age(age=self.age_input)
+            input_age = int(self.input_age.GetValue())
+            self.BMIcalc.set_age(age=input_age)
 
         except ValueError:
             self.input_age.SetForegroundColour(wx.RED)
@@ -132,7 +145,6 @@ app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(360, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 BMIcalc = BMIcalculation()
-pln = BMIprocessing(frm)
-pln.my_init_(BMIcalc)
+pln = BMIprocessing(BMIcalc,frm)
 frm.Show()
 app.MainLoop()
