@@ -28,14 +28,14 @@ class Panel ( wx.Panel ):
 
 		Geschlecht = wx.StaticBoxSizer( wx.StaticBox( self, wx.ID_ANY, u"Geschlecht" ), wx.VERTICAL )
 
+		self.no_sex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"keine Angabe", wx.DefaultPosition, wx.DefaultSize, 0 )
+		Geschlecht.Add( self.no_sex_button, 1, wx.ALL, 5 )
+
 		self.male_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"männlich", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.male_button, 1, wx.ALL, 5 )
 
 		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.female_button, 1, wx.ALL, 5 )
-
-		self.no_sex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"keine Angabe", wx.DefaultPosition, wx.DefaultSize, 0 )
-		Geschlecht.Add( self.no_sex_button, 1, wx.ALL, 5 )
 
 
 		input_sizer.Add( Geschlecht, 0, wx.EXPAND, 5 )
@@ -186,7 +186,7 @@ class Panel ( wx.Panel ):
 		# Connect Events
 		self.input_size.Bind( wx.EVT_TEXT, self.on_size_input )
 		self.input_weight.Bind( wx.EVT_TEXT, self.on_weight_input )
-		self.input_age.Bind( wx.EVT_TEXT, self.on_age_input )
+		self.input_age.Bind( wx.EVT_KEY_UP, self.on_age_input )
 		self.button_exit.Bind( wx.EVT_BUTTON, self.click_exit )
 		self.button_clac.Bind( wx.EVT_BUTTON, self.click_calc )
 

@@ -5,7 +5,20 @@ from typing import Optional
 
 class BMIcalculation:
     def __init__(self):
-        self.age = None
+        self.bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
+                                 ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                                 ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
+                          "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
+                                   ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                                   ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                          "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 24.0),
+                                     ("Übergewicht", 24.0, 30.0),
+                                     ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                                     ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
+        self.size = 1
+        self.age = 0
+        self.weight = 0
+        self.ideal_weight = 0
 
     def set_size(self, size: float) -> None:
         self.size = size / 100
@@ -15,71 +28,76 @@ class BMIcalculation:
         self.age = age
         return None
 
+    def get_age(self):
+        return self.age
+
     def set_weight(self, weight: float) -> None:
         self.weight = weight
         return None
 
+    def get_weight(self) -> float:
+        return self.weight
+
     def set_sex(self, sex: Optional[str]) -> None:
-        print(sex)
         self.sex = sex
         return None
 
+    def get_sex(self):
+        return self.sex
+
     def set_bmi(self) -> None:
         self.bmi = round(self.weight / (self.size ** 2), 1)
+        return None
 
     def get_bmi(self) -> float:
         return self.bmi
 
     def set_category(self) -> None:
-        BMItable = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
-                           ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 34.9),
-                           ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
-                    "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 24.9),
-                             ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 34.9),
-                             ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
-                    "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 23.9),
-                               ("Übergewicht", 24.0, 29.9),
-                               ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
-                               ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))}
-        counter = 1
-        result = 0
-        bmitable = BMItable[None]
-        if self.sex == "male":
-            bmitable = BMItable["male"]
-        if self.sex == "female":
-            bmitable = BMItable["female"]
-        for element in bmitable[1:]:
-            if self.bmi > element[1] and self.bmi < element[2]:
-                result = counter
-            counter = counter + 1
-        self.category = bmitable[result][0]
-        print(BMItable)
+        try:
+            counter = 1
+            result = 0
+            bmitable = self.bmi_table[None]
+            if self.sex == "male":
+                bmitable = self.bmi_table["male"]
+            if self.sex == "female":
+                bmitable = self.bmi_table["female"]
+            for element in bmitable[1:]:
+                if self.bmi > element[1] < element[2]:
+                    result = counter
+                counter = counter + 1
+            self.category = bmitable[result][0]
+        except ZeroDivisionError:
+            self.category = "Fehler"
 
     def get_category(self) -> str:
         return self.category
 
     def set_ideal(self) -> None:
-        idealweight_table = ((19, 24, 19, 24), (25, 34, 20, 25), (35, 44, 21, 26), (45, 54, 23, 28),
-                             (65, 130, 24, 29))
-        for element in idealweight_table:
-            if self.age >= element[0] and self.age <= element[1]:
-                idealweight_low = self.size ** 2 * element[2]
-                idealweight_high = self.size ** 2 * element[3]
-                self.idealweight = round((idealweight_low + idealweight_high) / 2, 1)
+        age_table = ((25, 34, 1), (35, 44, 2), (45, 54, 3), (55, 65, 4), (65, 130, 5))
+        if self.sex == "male":
+            ideal_bmi = 22.5
+        elif self.sex == "female":
+            ideal_bmi = 21.5
         else:
-            idealweight_low = self.size ** 2 * 25
-            idealweight_high = self.size ** 2 * 34
-            self.idealweight = round(idealweight_low + idealweight_high / 2, 1)
+            ideal_bmi = 21.7
+
+        if self.age:
+            for element in age_table:
+                if self.age >= element[0] and self.bmi <= element[1]:
+                    ideal_bmi = ideal_bmi + element[2]
+            self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
+        else:
+            self.ideal_weight = self.size ** 2 * ideal_bmi
         return None
 
     def get_ideal(self) -> float:
-        return self.idealweight
+        return self.ideal_weight
 
 
 class BMIprocessing(Panel):
-    def __init__(self, BMIcalc, parent):
+    def __init__(self, bmicalc, parent):
         super().__init__(parent)
-        self.BMIcalc = BMIcalc
+        self.BMIcalc = bmicalc
         self.age_input = None
 
     def sex_button(self):
@@ -103,8 +121,9 @@ class BMIprocessing(Panel):
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
         ideal = str(self.BMIcalc.get_ideal())
-
-        if "untergewicht" or "übergewicht" in category.lower():
+        print(category)
+        if "untergewicht" in category.lower() or "übergewicht" in category.lower():
+            print("TEST")
             self.output_raiting.SetForegroundColour((255, 128, 0))
         elif "normalgewicht" in category.lower():
             self.output_raiting.SetForegroundColour(wx.GREEN)
