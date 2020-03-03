@@ -32,18 +32,17 @@ class BMIcalculation:
 
     def set_category(self) -> None:
         BMItable = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 24.9),
-                           ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
-                           ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                           ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 34.9),
+                           ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
                     "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 24.9),
-                             ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
-                             ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                             ("Übergewicht", 25.0, 29.9), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 34.9),
+                             ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
                     "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 23.9),
                                ("Übergewicht", 24.0, 29.9),
                                ("Starkes Übergewicht(Apdipositas Grad I)", 30.0, 34.9),
-                               ("Apdipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))}
+                               ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))}
         counter = 1
         result = 0
-        self.sex = "male"
         bmitable = BMItable[None]
         if self.sex == "male":
             bmitable = BMItable["male"]
@@ -54,6 +53,7 @@ class BMIcalculation:
                 result = counter
             counter = counter + 1
         self.category = bmitable[result][0]
+        print(BMItable)
 
     def get_category(self) -> str:
         return self.category
@@ -83,13 +83,13 @@ class BMIprocessing(Panel):
         self.age_input = None
 
     def sex_button(self):
-        if self.male_button.GetValue() == True:
+        if self.male_button.GetValue():
             sex = "male"
 
-        elif self.female_button.GetValue() == True:
+        elif self.female_button.GetValue():
             sex = "female"
 
-        elif self.no_sex_button.GetValue() == True:
+        else:
             sex = None
 
         self.BMIcalc.set_sex(sex)
@@ -103,6 +103,13 @@ class BMIprocessing(Panel):
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
         ideal = str(self.BMIcalc.get_ideal())
+
+        if "untergewicht" or "übergewicht" in category.lower():
+            self.output_raiting.SetForegroundColour((255, 128, 0))
+        elif "normalgewicht" in category.lower():
+            self.output_raiting.SetForegroundColour(wx.GREEN)
+        else:
+            self.output_raiting.SetForegroundColour(wx.RED)
 
         self.output_raiting.SetLabelMarkup(category)
         self.output_BMI.SetLabelMarkup(bmi)
@@ -145,6 +152,6 @@ app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(360, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 BMIcalc = BMIcalculation()
-pln = BMIprocessing(BMIcalc,frm)
+pln = BMIprocessing(BMIcalc, frm)
 frm.Show()
 app.MainLoop()
