@@ -5,7 +5,7 @@ from typing import Optional
 
 class BMIcalculation:
     def __init__(self):
-        self.bmi_table = {"no_sex": (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
+        self.bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
                                  ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
                                  ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
                           "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
@@ -16,6 +16,7 @@ class BMIcalculation:
                                      ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
                                      ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
         self.size = 1
+        self.bmi = 0
         self.age = None
         self.weight = 0
         self.ideal_weight = 0
@@ -58,7 +59,7 @@ class BMIcalculation:
         try:
             counter = 1
             result = 0
-            bmitable = self.bmi_table["no_sex"]
+            bmitable = self.bmi_table[None]
             if self.sex == "male":
                 bmitable = self.bmi_table["male"]
             if self.sex == "female":
@@ -83,14 +84,14 @@ class BMIcalculation:
             ideal_bmi = 21.5
         elif self.sex == "no_sex":
             ideal_bmi = 21.7
-
+        print(ideal_bmi)
         if self.age:
             for element in age_table:
                 if self.age >= element[0] and self.bmi <= element[1]:
                     ideal_bmi = ideal_bmi + element[2]
             self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
         else:
-            self.ideal_weight = float(self.size ** 2 * ideal_bmi)
+            self.ideal_weight = round(float(self.size ** 2 * ideal_bmi), 2)
         return None
 
     def get_ideal(self) -> float:
