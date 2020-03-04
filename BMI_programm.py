@@ -143,10 +143,14 @@ class BMIprocessing(Panel):
             self.input_size.SetForegroundColour(wx.BLACK)
             input_size = float(self.input_size.GetValue())
             self.BMIcalc.set_size(size=input_size)
+            self.output_raiting.SetLabelMarkup(" ")
+
         except ValueError:
+            self.output_raiting.SetForegroundColour(wx.RED)
+            self.output_raiting.SetLabelMarkup("FEHLER")
+            self.output_BMI.SetLabelMarkup(" ")
+            self.output_idealweight.SetLabelMarkup(" ")
             self.input_size.SetForegroundColour(wx.RED)
-            input_size = self.input_size.GetValue()
-            self.BMIcalc.set_size(size=input_size)
         self.input_size.Refresh()
 
     def on_weight_input(self, event):
@@ -154,9 +158,13 @@ class BMIprocessing(Panel):
             self.input_weight.SetForegroundColour(wx.BLACK)
             input_weight = float(self.input_weight.GetValue())
             self.BMIcalc.set_weight(weight=input_weight)
+            self.output_raiting.SetLabelMarkup(" ")
+
         except ValueError:
-            input_weight = self.input_weight.GetValue()
-            self.BMIcalc.set_weight(weight=input_weight)
+            self.output_raiting.SetForegroundColour(wx.RED)
+            self.output_raiting.SetLabelMarkup("FEHLER")
+            self.output_BMI.SetLabelMarkup(" ")
+            self.output_idealweight.SetLabelMarkup(" ")
             self.input_weight.SetForegroundColour(wx.RED)
         self.input_weight.Refresh()
 
@@ -165,10 +173,13 @@ class BMIprocessing(Panel):
             self.input_age.SetForegroundColour(wx.BLACK)
             input_age = int(self.input_age.GetValue())
             self.BMIcalc.set_age(age=input_age)
+            self.output_raiting.SetLabelMarkup(" ")
 
         except ValueError:
-            input_age = self.input_age.GetValue()
-            self.BMIcalc.set_age(age=input_age)
+            self.output_raiting.SetForegroundColour(wx.RED)
+            self.output_raiting.SetLabelMarkup("FEHLER")
+            self.output_BMI.SetLabelMarkup(" ")
+            self.output_idealweight.SetLabelMarkup(" ")
             self.input_age.SetForegroundColour(wx.RED)
         self.input_age.Refresh()
 
@@ -180,4 +191,3 @@ BMIcalc = BMIcalculation()
 pln = BMIprocessing(BMIcalc, frm)
 frm.Show()
 app.MainLoop()
-
