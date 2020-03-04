@@ -146,6 +146,8 @@ class BMIprocessing(Panel):
             self.BMIcalc.set_size(size=input_size)
         except ValueError:
             self.input_size.SetForegroundColour(wx.RED)
+            input_size = self.input_size.GetValue()
+            self.BMIcalc.set_size(size=input_size)
         self.input_size.Refresh()
 
     def on_weight_input(self, event):
@@ -154,6 +156,8 @@ class BMIprocessing(Panel):
             input_weight = float(self.input_weight.GetValue())
             self.BMIcalc.set_weight(weight=input_weight)
         except ValueError:
+            input_weight = self.input_weight.GetValue()
+            self.BMIcalc.set_weight(weight=input_weight)
             self.input_weight.SetForegroundColour(wx.RED)
         self.input_weight.Refresh()
 
@@ -164,6 +168,8 @@ class BMIprocessing(Panel):
             self.BMIcalc.set_age(age=input_age)
 
         except ValueError:
+            input_age = self.input_age.GetValue()
+            self.BMIcalc.set_age(age=input_age)
             self.input_age.SetForegroundColour(wx.RED)
         self.input_age.Refresh()
 
@@ -175,3 +181,4 @@ BMIcalc = BMIcalculation()
 pln = BMIprocessing(BMIcalc, frm)
 frm.Show()
 app.MainLoop()
+
