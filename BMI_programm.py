@@ -161,3 +161,4 @@ BMIcalc = BMIcalculation()
 pln = BMIprocessing(BMIcalc, frm)
 frm.Show()
 app.MainLoop()
+
