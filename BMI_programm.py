@@ -5,7 +5,7 @@ from typing import Optional
 
 class BMIcalculation:
     def __init__(self):
-        self.bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
+        self.bmi_table = {"no_sex": (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
                                  ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
                                  ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
                           "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
@@ -16,9 +16,11 @@ class BMIcalculation:
                                      ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
                                      ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
         self.size = 1
-        self.age = 0
+        self.age = None
         self.weight = 0
         self.ideal_weight = 0
+        self.category = None
+        self.sex = None
 
     def set_size(self, size: float) -> None:
         self.size = size / 100
@@ -56,7 +58,7 @@ class BMIcalculation:
         try:
             counter = 1
             result = 0
-            bmitable = self.bmi_table[None]
+            bmitable = self.bmi_table["no_sex"]
             if self.sex == "male":
                 bmitable = self.bmi_table["male"]
             if self.sex == "female":
@@ -74,11 +76,12 @@ class BMIcalculation:
 
     def set_ideal(self) -> None:
         age_table = ((25, 34, 1), (35, 44, 2), (45, 54, 3), (55, 65, 4), (65, 130, 5))
+        ideal_bmi = 0
         if self.sex == "male":
             ideal_bmi = 22.5
         elif self.sex == "female":
             ideal_bmi = 21.5
-        else:
+        elif self.sex == "no_sex":
             ideal_bmi = 21.7
 
         if self.age:
@@ -87,7 +90,7 @@ class BMIcalculation:
                     ideal_bmi = ideal_bmi + element[2]
             self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
         else:
-            self.ideal_weight = self.size ** 2 * ideal_bmi
+            self.ideal_weight = float(self.size ** 2 * ideal_bmi)
         return None
 
     def get_ideal(self) -> float:
@@ -121,9 +124,7 @@ class BMIprocessing(Panel):
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
         ideal = str(self.BMIcalc.get_ideal())
-        print(category)
         if "untergewicht" in category.lower() or "übergewicht" in category.lower():
-            print("TEST")
             self.output_raiting.SetForegroundColour((255, 128, 0))
         elif "normalgewicht" in category.lower():
             self.output_raiting.SetForegroundColour(wx.GREEN)
