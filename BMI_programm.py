@@ -84,7 +84,7 @@ class BMIcalculation:
             ideal_bmi = 21.5
         elif self.sex == "no_sex":
             ideal_bmi = 21.7
-        print(ideal_bmi)
+
         if self.age:
             for element in age_table:
                 if self.age >= element[0] and self.bmi <= element[1]:
@@ -125,6 +125,7 @@ class BMIprocessing(Panel):
         category = self.BMIcalc.get_category()
         bmi = str(self.BMIcalc.get_bmi())
         ideal = str(self.BMIcalc.get_ideal())
+
         if "untergewicht" in category.lower() or "übergewicht" in category.lower():
             self.output_raiting.SetForegroundColour((255, 128, 0))
         elif "normalgewicht" in category.lower():
@@ -132,9 +133,14 @@ class BMIprocessing(Panel):
         else:
             self.output_raiting.SetForegroundColour(wx.RED)
 
+        if ideal == "0.0" :
+            self.output_idealweight.SetLabelMarkup("Keine Angabe")
+        else:
+            self.output_idealweight.SetLabelMarkup(ideal)
+
         self.output_raiting.SetLabelMarkup(category)
         self.output_BMI.SetLabelMarkup(bmi)
-        self.output_idealweight.SetLabelMarkup(ideal)
+
 
     def click_exit(self, event):
         self.Destroy()
