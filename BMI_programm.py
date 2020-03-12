@@ -67,10 +67,10 @@ class BMIprocessing(Panel):
         age = self.input_age.GetValue()
         return [weight, size, age]#
 
-    def set_output(self,info):
+    def set_output(self, info):
         self.raiting = info[0]
         self.BMI = info[1]
-        self.idealweight =info[2]
+        self.idealweight = info[2]
 
     def click_calc(self, event):
         self.output_raiting.SetLabelMarkup(self.raiting)
@@ -92,8 +92,6 @@ BMIcalc.set_result()
 BMIcalc.set_ideal()
 info = [BMIcalc.get_result(),BMIcalc.get_bmi(),BMIcalc.get_ideal()]
 pln.set_output(info)
-
-
 
 frm.Show()
 app.MainLoop()
