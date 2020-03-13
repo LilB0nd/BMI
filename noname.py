@@ -115,15 +115,15 @@ class Panel ( wx.Panel ):
 
 		bewertung_sizer.Add( self.text_bewertung, 0, wx.ALL, 5 )
 
-		self.output_raiting = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.ST_ELLIPSIZE_MIDDLE|wx.BORDER_SUNKEN )
-		self.output_raiting.SetLabelMarkup( wx.EmptyString )
-		self.output_raiting.Wrap( -1 )
+		self.output_rating = wx.StaticText(output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL | wx.ST_ELLIPSIZE_MIDDLE | wx.BORDER_SUNKEN)
+		self.output_rating.SetLabelMarkup(wx.EmptyString)
+		self.output_rating.Wrap(-1)
 
-		self.output_raiting.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
-		self.output_raiting.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
-		self.output_raiting.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
+		self.output_rating.SetFont(wx.Font(9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial"))
+		self.output_rating.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
+		self.output_rating.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNFACE))
 
-		bewertung_sizer.Add( self.output_raiting, 1, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
+		bewertung_sizer.Add(self.output_rating, 1, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 5)
 
 
 		output_sizer.Add( bewertung_sizer, 0, wx.EXPAND, 5 )
