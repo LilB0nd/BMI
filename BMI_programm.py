@@ -86,9 +86,6 @@ class BMIcalculation:
         return self.category
 
     def set_ideal(self) -> None:
-        """
-        Hier wird das idealgewicht berechnet
-        """
         age_table = ((25, 34, 1), (35, 44, 2), (45, 54, 3), (55, 65, 4), (65, 130, 5))
 
         if self.sex == "male":
