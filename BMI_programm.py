@@ -113,8 +113,7 @@ class BMIcalculation:
             ideal_bmi = 21.5
         else:
             ideal_bmi = 21.7
-        if self.size != 0.0:
-            print(self.size)
+        if self.size != 0.0 or self.weight != 0.0:
             if self.age:
                 for element in age_table:
                     if self.age >= element[0] and self.bmi <= element[1]:
