@@ -44,12 +44,12 @@ class Panel ( wx.Panel ):
 
 		groesse_sizer = wx.BoxSizer( wx.VERTICAL )
 
-		self.text_groesse = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Größe:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
+		self.text_groesse = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Größe:*", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_groesse.Wrap( -1 )
 
 		groesse_sizer.Add( self.text_groesse, 0, wx.ALIGN_CENTER|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 
-		self.text_gewicht = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Gewicht:", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
+		self.text_gewicht = wx.StaticText( Personen_sizer.GetStaticBox(), wx.ID_ANY, u"Gewicht:*", wx.DefaultPosition, wx.Size( 60,20 ), wx.ALIGN_RIGHT )
 		self.text_gewicht.Wrap( -1 )
 
 		groesse_sizer.Add( self.text_gewicht, 1, wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5 )
@@ -115,15 +115,15 @@ class Panel ( wx.Panel ):
 
 		bewertung_sizer.Add( self.text_bewertung, 0, wx.ALL, 5 )
 
-		self.output_rating = wx.StaticText(output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL | wx.ST_ELLIPSIZE_MIDDLE | wx.BORDER_SUNKEN)
-		self.output_rating.SetLabelMarkup(wx.EmptyString)
-		self.output_rating.Wrap(-1)
+		self.output_rating = wx.StaticText( output_sizer.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.ALIGN_CENTER_HORIZONTAL|wx.ST_ELLIPSIZE_MIDDLE|wx.BORDER_SUNKEN )
+		self.output_rating.SetLabelMarkup( wx.EmptyString )
+		self.output_rating.Wrap( -1 )
 
-		self.output_rating.SetFont(wx.Font(9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial"))
-		self.output_rating.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT))
-		self.output_rating.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNFACE))
+		self.output_rating.SetFont( wx.Font( 9, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, "Arial" ) )
+		self.output_rating.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNTEXT ) )
+		self.output_rating.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_BTNFACE ) )
 
-		bewertung_sizer.Add(self.output_rating, 1, wx.ALIGN_CENTER | wx.ALL | wx.EXPAND, 5)
+		bewertung_sizer.Add( self.output_rating, 1, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
 
 
 		output_sizer.Add( bewertung_sizer, 0, wx.EXPAND, 5 )
@@ -166,6 +166,11 @@ class Panel ( wx.Panel ):
 		main_sizer.Add( output_sizer, 0, wx.EXPAND, 5 )
 
 		botton_sizer = wx.BoxSizer( wx.HORIZONTAL )
+
+		self.m_staticText13 = wx.StaticText( self, wx.ID_ANY, u"*Pflichtfelder", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText13.Wrap( -1 )
+
+		botton_sizer.Add( self.m_staticText13, 0, wx.ALL, 5 )
 
 
 		botton_sizer.Add( ( 0, 0), 2, wx.EXPAND, 5 )

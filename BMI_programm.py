@@ -141,7 +141,7 @@ class BMIprocessing(Panel):
 
     def sex_buttons(self):
         """
-        Holt sich das ausgewählte Geschlecht aus der Gui und gibt sie an die Klasse BMIcalculation weiter
+        Holt sich das ausgewählte Geschlecht aus der Gui und gibt sie an die Instanz der Klasse BMIcalculation weiter
         :return: Das Geschlecht das ausgewählt wurde wird der Klasse BMIcalculation übergeben
         """
         if self.male_button.GetValue():
@@ -161,11 +161,11 @@ class BMIprocessing(Panel):
         self.BMIcalc.set_category()
         self.BMIcalc.set_ideal()
 
-        category = self.output_rating.GetLabel()
+        category = self.output_rating.GetLabel()# Nimmt den wert aus dem label "Rating" in dem der fehler angezeigt wird und setzt ihn vor berechnung vom bmi auf die variable category
         ideal = self.output_idealweight.GetLabel()
         bmi = self.output_BMI.GetLabel()
 
-        if category != "FEHLER":
+        if category != "FEHLER": # Falls das rating was zuletzt da war nicht "FEHLER" ist wird der ganze kram berechnet weil das bedeutet das alle variablen richtig sind!
             category = self.BMIcalc.get_category()
             bmi = str(self.BMIcalc.get_bmi())
             ideal = str(self.BMIcalc.get_ideal())
@@ -231,18 +231,25 @@ class BMIprocessing(Panel):
         self.input_age.Refresh()
 
     def clear_outputs(self):
+        """
+        Leert die ausgabe Beschriftungen
+        """
         self.output_rating.SetLabelMarkup("")
         self.output_BMI.SetLabelMarkup("")
         self.output_idealweight.SetLabelMarkup("")
 
     def error_outputs(self):
+        """
+        Gibt “FEHELER” bei der Bewertung aus und
+        leert die ausgabe Beschriftungen von dem BMI und dem Idealgewicht
+        """
         self.output_rating.SetLabelMarkup("FEHLER")
         self.output_BMI.SetLabelMarkup("")
         self.output_idealweight.SetLabelMarkup("")
 
 
 app = wx.App()
-frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(360, 270),
+frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(370, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
 pln = BMIprocessing(frm)
 frm.Show()
