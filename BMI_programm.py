@@ -5,17 +5,7 @@ from typing import Optional
 
 class BMIcalculation:
     def __init__(self):
-        self.bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
-                                 ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                                 ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
-                          "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
-                                   ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                                   ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
-                          "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 24.0),
-                                     ("Übergewicht", 24.0, 30.0),
-                                     ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                                     ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
-        self.size = 1
+        self.size = 0
         self.bmi = 0
         self.age = None
         self.weight = 0
@@ -28,7 +18,10 @@ class BMIcalculation:
         Hier wird die Größe difieniert und durch 100 geteilt, um die Größe in der Einheit m zu haben anstatt in cm.
         :param size: Die Größe die von der GUI hier übergeben wird.
         """
-        self.size = size / 100
+        try:
+            self.size = size / 100
+        except ZeroDivisionError:
+            self.category = "FEHLER"
         return None
 
     def set_age(self, age: Optional[int]) -> None:
@@ -38,7 +31,11 @@ class BMIcalculation:
         self.age = age
         return None
 
-    def get_age(self):
+    def get_age(self) -> Optional[int]:
+        """
+        Das Alter wird returned
+        :return: age(int oder float)
+        """
         return self.age
 
     def set_weight(self, weight: float) -> None:
@@ -46,67 +43,93 @@ class BMIcalculation:
         return None
 
     def get_weight(self) -> float:
+        """
+        Das Gewicht wird returned
+        :return: weight(float)
+        """
         return self.weight
 
     def set_sex(self, sex: Optional[str]) -> None:
         self.sex = sex
         return None
 
-    def get_sex(self):
+    def get_sex(self) -> Optional[str]:
+        """
+        Das Geschlecht wird returned, entweder in Form eines str oder ein None
+        :return: sex(str oder None)
+        """
         return self.sex
 
     def set_bmi(self) -> None:
-        """
-        Hier wird der BMI errechnet an Hand der Größe und des Gewichts
-        """
-        self.bmi = round(self.weight / (self.size ** 2), 1)
+        try:
+            self.bmi = round(self.weight / (self.size ** 2), 1)
+        except ZeroDivisionError:
+            self.category = "FEHLER"
         return None
 
     def get_bmi(self) -> float:
+        """
+        Der Body-MasssIndex wird returned
+        :return: bmi(float)
+        """
         return self.bmi
 
     def set_category(self) -> None:
-        try:
-            counter = 1
-            result = 0
-            bmitable = self.bmi_table[None]
-            if self.sex == "male":
-                bmitable = self.bmi_table["male"]
-            if self.sex == "female":
-                bmitable = self.bmi_table["female"]
-            for element in bmitable[1:]:
-                if self.bmi > element[1] < element[2]:
-                    result = counter
+        bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
+                            ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                            ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
+                     "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
+                              ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                              ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
+                     "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 24.0),
+                                ("Übergewicht", 24.0, 30.0),
+                                ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                                ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
+        counter = 1
+        result = 0
+        bmitable = bmi_table[None]
+        if self.sex == "male":
+            bmitable = bmi_table["male"]
+        if self.sex == "female":
+            bmitable = bmi_table["female"]
+        for element in bmitable[1:]:
+            if self.bmi > element[1] < element[2]:
+                result = counter
                 counter = counter + 1
-            self.category = bmitable[result][0]
-        except ZeroDivisionError:
-            self.category = "Fehler"
+        self.category = bmitable[result][0]
 
     def get_category(self) -> str:
+        """
+        Die Bewertung des BMI wird returned
+        :return: category(str
+        """
         return self.category
 
     def set_ideal(self) -> None:
         age_table = ((25, 34, 1), (35, 44, 2), (45, 54, 3), (55, 65, 4), (65, 130, 5))
-
         if self.sex == "male":
             ideal_bmi = 22.5
         elif self.sex == "female":
             ideal_bmi = 21.5
         else:
             ideal_bmi = 21.7
-
-        if self.age:
-            for element in age_table:
-                if self.age >= element[0] and self.bmi <= element[1]:
-                    ideal_bmi = ideal_bmi + element[2]
-            self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
+        if self.size != 0.0:
+            print(self.size)
+            if self.age:
+                for element in age_table:
+                    if self.age >= element[0] and self.bmi <= element[1]:
+                        ideal_bmi = ideal_bmi + element[2]
+                self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
+            else:
+                self.ideal_weight = round(float(self.size ** 2 * ideal_bmi), 2)
         else:
-            self.ideal_weight = round(float(self.size ** 2 * ideal_bmi), 2)
-        return None
+            self.ideal_weight = 0.0
+            return None
 
     def get_ideal(self) -> float:
         """
-        :return: ideal_weight ist das idaelgewicht das in set_ideal ausgerechnet wurde
+        Das Idealgewicht für die angegebene Größe, Gewicht und Alter wird zurückgeben
+        :return: ideal_weight(float)
         """
         return self.ideal_weight
 
