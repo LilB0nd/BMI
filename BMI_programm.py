@@ -1,4 +1,4 @@
-from noname import Panel
+from BMI_GUI import Panel
 import wx
 from typing import Optional
 
@@ -20,13 +20,14 @@ class BMIcalculation:
         :param size: Die Größe die von der GUI hier übergeben wird.
         """
         try:
-            self.size = size / 100
-        except ZeroDivisionError:
+            self.size = size / 100  # Hier wird die Größe von cm in Meter umgewandelt
+        except ZeroDivisionError:  # Dient zur Fehlervermeidung
             pass
         return None
 
     def set_age(self, age: Optional[int]) -> None:
         """
+        age wird mithilfe von self in der komplette Klasse nutzbar gemacht
         :param age:
         """
         self.age = age
@@ -40,6 +41,10 @@ class BMIcalculation:
         return self.age
 
     def set_weight(self, weight: float) -> None:
+        """
+        weight wird mithilfe von self in der komplette Klasse nutzbar gemacht
+        :param weight:
+        """
         self.weight = weight
         return None
 
@@ -51,6 +56,11 @@ class BMIcalculation:
         return self.weight
 
     def set_sex(self, sex: Optional[str]) -> None:
+        """
+        Sex wird mithilfe von self in der komplette Klasse nutzbar gemacht.
+        Sex ist ein string oder None
+        :param sex:
+        """
         self.sex = sex
         return None
 
@@ -62,9 +72,13 @@ class BMIcalculation:
         return self.sex
 
     def set_bmi(self) -> None:
+        """
+        Hier wird der BMI errechnet, da es zum ZeroDivisionError kommen kann gibt es try und except ZeroDiviionErrror
+        :return:
+        """
         try:
-            self.bmi = round(self.weight / (self.size ** 2), 1)
-        except ZeroDivisionError:
+            self.bmi = round(self.weight / (self.size ** 2), 1)  # Hier wird der BMI errechnet
+        except ZeroDivisionError:  # Dient zur Fehlervermeidung
             pass
         return None
 
@@ -76,6 +90,11 @@ class BMIcalculation:
         return self.bmi
 
     def set_category(self) -> None:
+        """
+        Hier wird sich Gewichtsklasse herrausgesucht anhand des Geschlechts und des BMIs
+        Die Werte aus den Tupel kommen von der Internetseite:
+        http://www.spiegel.de/gesundheit/ernaehrung/bmi-rechner-so-ermitteln-sie-ihren-body-mass-index-a-824673.html
+        """
         counter = 0
         result = 0
         if self.sex == "male":
@@ -93,7 +112,7 @@ class BMIcalculation:
 
         for element in bmi_tuple[1:]:
             counter = counter + 1
-            if element[1] <= self.bmi <= element[2]:
+            if element[1] <= self.bmi <= element[2]:  # Es wird geschaut ob der BMI zwischen diesen Wertebereich ist
                 result = counter
 
         self.category = bmi_tuple[result][0]
@@ -106,6 +125,9 @@ class BMIcalculation:
         return self.category
 
     def set_ideal(self) -> None:
+        """
+        Hier wird das idealgewicht berechnet.
+        """
         age_table = ((25, 34, 1), (35, 44, 2), (45, 54, 3), (55, 65, 4), (65, 130, 5))
         if self.sex == "male":
             ideal_bmi = 22.5
@@ -113,10 +135,11 @@ class BMIcalculation:
             ideal_bmi = 21.5
         else:
             ideal_bmi = 21.7
-        if self.size != 0.0 and self.weight != 0.0:
+        if self.size != 0.0 and self.weight != 0.0:  # Dies dient dazu Fehler zu verhindern
             if self.age:
                 for element in age_table:
-                    if element[0] <= self.age <= element[1]:
+                    if element[0] <= self.age <= element[1]:  # Es wird geschaut,
+                        # ob das Alter zwischen diesen  Wertebereich ist
                         ideal_bmi = ideal_bmi + element[2]
                 self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
             else:
