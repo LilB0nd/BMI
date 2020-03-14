@@ -101,7 +101,7 @@ class BMIcalculation:
     def get_category(self) -> str:
         """
         Die Bewertung des BMI wird returned
-        :return: category(str
+        :return: category(str)
         """
         return self.category
 
@@ -156,28 +156,32 @@ class BMIprocessing(Panel):
         self.BMIcalc.set_sex(sex)
 
     def click_calc(self, event):
-        self.sex_buttons()
-        self.BMIcalc.set_bmi()
+        """
+        Dient primär dazu die Outputs zu tätigen
+        """
+        self.sex_buttons()  # Geschlecht bestimmen
+
+        self.BMIcalc.set_bmi()  # Werte werden ermittelt
         self.BMIcalc.set_category()
         self.BMIcalc.set_ideal()
 
-        category = self.output_rating.GetLabel()# Nimmt den wert aus dem label "Rating" in dem der fehler angezeigt wird und setzt ihn vor berechnung vom bmi auf die variable category
+        category = self.output_rating.GetLabel()  # Die vorherigen Werte werden Zwischen gespeichert
         ideal = self.output_idealweight.GetLabel()
         bmi = self.output_BMI.GetLabel()
 
-        if category != "FEHLER": # Falls das rating was zuletzt da war nicht "FEHLER" ist wird der ganze kram berechnet weil das bedeutet das alle variablen richtig sind!
+        if category != "FEHLER":
             category = self.BMIcalc.get_category()
             bmi = str(self.BMIcalc.get_bmi())
             ideal = str(self.BMIcalc.get_ideal())
 
-        if "untergewicht" in category.lower() or "übergewicht" in category.lower():
+        if "untergewicht" in category.lower() or "übergewicht" in category.lower():  # Schriftfarbe wird gesetzt
             self.output_rating.SetForegroundColour((255, 128, 0))
         elif "normalgewicht" in category.lower():
             self.output_rating.SetForegroundColour(wx.GREEN)
         else:
             self.output_rating.SetForegroundColour(wx.RED)
 
-        self.output_idealweight.SetLabelMarkup(ideal)
+        self.output_idealweight.SetLabelMarkup(ideal)  # Ausgaben werden getätigt
         self.output_rating.SetLabelMarkup(category)
         self.output_BMI.SetLabelMarkup(bmi)
 
@@ -185,10 +189,13 @@ class BMIprocessing(Panel):
         """
         Schließt das Fenster und beendet das Programm
         """
-        self.Destroy()
         exit()
 
     def on_size_input(self, event):
+        """
+        Guckt ob der Eingabewert eine Zahl ist und gibt sie an die Instanz der Klasse BMIcalculation weiter,
+        wenn der Eingabewert keine Zahl ist wird er rot und es werden die error_outputs ausgegeben
+        """
         try:
             self.input_size.SetForegroundColour(wx.BLACK)
             input_size = float(self.input_size.GetValue())
@@ -196,12 +203,14 @@ class BMIprocessing(Panel):
             self.clear_outputs()
 
         except ValueError:
-            self.output_rating.SetForegroundColour(wx.RED)
             self.error_outputs()
-            self.input_size.SetForegroundColour(wx.RED)
         self.input_size.Refresh()
 
     def on_weight_input(self, event):
+        """
+        Guckt ob der Eingabewert eine Zahl und gibt sie an die Instanz der Klasse BMIcalculation weiter,
+        wenn der Eingabewert keine Zahl ist wird er rot und es werden die error_outputs ausgegeben
+        """
         try:
             self.input_weight.SetForegroundColour(wx.BLACK)
             input_weight = float(self.input_weight.GetValue())
@@ -209,12 +218,15 @@ class BMIprocessing(Panel):
             self.clear_outputs()
 
         except ValueError:
-            self.output_rating.SetForegroundColour(wx.RED)
             self.error_outputs()
-            self.input_weight.SetForegroundColour(wx.RED)
         self.input_weight.Refresh()
 
     def on_age_input(self, event):
+        """
+        Guckt ob der Eingabewert eine Zahl und gibt sie an die Instanz der Klasse BMIcalculation weiter,
+        wenn der Eingabewert keine Zahl ist wird er rot und es werden die error_outputs ausgegeben
+        Wenn kein Wert eingegeben wurde, wird der Wert 0 weitergegeben.
+        """
         try:
             self.input_age.SetForegroundColour(wx.BLACK)
             if self.input_age.GetValue() == "":
@@ -225,9 +237,7 @@ class BMIprocessing(Panel):
             self.clear_outputs()
 
         except ValueError:
-            self.output_rating.SetForegroundColour(wx.RED)
             self.error_outputs()
-            self.input_age.SetForegroundColour(wx.RED)
         self.input_age.Refresh()
 
     def clear_outputs(self):
@@ -240,12 +250,15 @@ class BMIprocessing(Panel):
 
     def error_outputs(self):
         """
-        Gibt “FEHELER” bei der Bewertung aus und
-        leert die ausgabe Beschriftungen von dem BMI und dem Idealgewicht
+        Gibt “FEHLER” bei der Bewertung aus und
+        setzt die ausgabe Beschriftungen von dem BMI und dem Idealgewicht auf 0
         """
+        self.output_rating.SetForegroundColour(wx.RED)
         self.output_rating.SetLabelMarkup("FEHLER")
-        self.output_BMI.SetLabelMarkup("")
-        self.output_idealweight.SetLabelMarkup("")
+        self.output_BMI.SetLabelMarkup("0")
+        self.output_idealweight.SetLabelMarkup("0")
+        self.input_weight.SetForegroundColour(wx.RED)
+
 
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(370, 270),

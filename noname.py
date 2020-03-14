@@ -31,10 +31,10 @@ class Panel ( wx.Panel ):
 		self.no_sex_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"keine Angabe", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.no_sex_button, 1, wx.ALL, 5 )
 
-		self.male_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"männlich", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.male_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"Männlich", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.male_button, 1, wx.ALL, 5 )
 
-		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.female_button = wx.RadioButton( Geschlecht.GetStaticBox(), wx.ID_ANY, u"Weiblich", wx.DefaultPosition, wx.DefaultSize, 0 )
 		Geschlecht.Add( self.female_button, 1, wx.ALL, 5 )
 
 
