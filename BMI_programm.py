@@ -137,7 +137,6 @@ class BMIprocessing(Panel):
     def __init__(self, parent):
         super().__init__(parent)
         self.BMIcalc = BMIcalculation()
-        self.age_input = None
 
     def sex_buttons(self):
         """
