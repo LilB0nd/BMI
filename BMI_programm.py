@@ -21,7 +21,7 @@ class BMIcalculation:
         try:
             self.size = size / 100
         except ZeroDivisionError:
-            self.category = "FEHLER"
+            pass
         return None
 
     def set_age(self, age: Optional[int]) -> None:
@@ -64,7 +64,7 @@ class BMIcalculation:
         try:
             self.bmi = round(self.weight / (self.size ** 2), 1)
         except ZeroDivisionError:
-            self.category = "FEHLER"
+            pass
         return None
 
     def get_bmi(self) -> float:
@@ -113,7 +113,7 @@ class BMIcalculation:
             ideal_bmi = 21.5
         else:
             ideal_bmi = 21.7
-        if self.size != 0.0 or self.weight != 0.0:
+        if self.size != 0.0 and self.weight != 0.0:
             if self.age:
                 for element in age_table:
                     if self.age >= element[0] and self.bmi <= element[1]:
