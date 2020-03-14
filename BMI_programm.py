@@ -247,7 +247,6 @@ class BMIprocessing(Panel):
         self.output_BMI.SetLabelMarkup("")
         self.output_idealweight.SetLabelMarkup("")
 
-
 app = wx.App()
 frm = wx.Frame(None, title="BMI Rechner", size=wx.Size(370, 270),
                style=wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
