@@ -6,12 +6,13 @@ from typing import Optional
 class BMIcalculation:
     def __init__(self):
         self.size = 0
-        self.bmi = 0
+        self.weight = 0.0
         self.age = None
-        self.weight = 0
-        self.ideal_weight = 0
-        self.category = None
         self.sex = None
+
+        self.bmi = 0.0
+        self.ideal_weight = 0.0
+        self.category = None
 
     def set_size(self, size: float) -> None:
         """
@@ -75,28 +76,27 @@ class BMIcalculation:
         return self.bmi
 
     def set_category(self) -> None:
-        bmi_table = {None: (("FEHLER", None), ("Untergewicht", 0.0, 18.4), ("Normalgewicht", 18.5, 25.0),
-                            ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                            ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0)),
-                     "male": (("FEHLER", None), ("Untergewicht", 0.0, 20.0), ("Normalgewicht", 20.0, 25.0),
-                              ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                              ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0)),
-                     "female": (("FEHLER", None), ("Untergewicht", 0.0, 19.0), ("Normalgewicht", 19.0, 24.0),
-                                ("Übergewicht", 24.0, 30.0),
-                                ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
-                                ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))}
-        counter = 1
+        counter = 0
         result = 0
-        bmitable = bmi_table[None]
         if self.sex == "male":
-            bmitable = bmi_table["male"]
-        if self.sex == "female":
-            bmitable = bmi_table["female"]
-        for element in bmitable[1:]:
-            if self.bmi > element[1] < element[2]:
+            bmi_tuple = (("FEHLER", None), ("Untergewicht", 0.1, 20.0), ("Normalgewicht", 20.0, 25.0),
+                         ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                         ("Adipositas Grad II", 35.0, 39.9), ("Adipositas Grad III", 40.0, 200.0))
+        elif self.sex == "female":
+            bmi_tuple = (("FEHLER", None), ("Untergewicht", 0.1, 19.0), ("Normalgewicht", 19.0, 24.0),
+                         ("Übergewicht", 24.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                         ("Adipositas Grad II", 35.0, 40.0), ("Adipositas Grad III", 40.0, 200.0))
+        else:
+            bmi_tuple = (("FEHLER", None), ("Untergewicht", 0.1, 18.4), ("Normalgewicht", 18.5, 25.0),
+                         ("Übergewicht", 25.0, 30.0), ("Starkes Übergewicht(Adipositas Grad I)", 30.0, 35.0),
+                         ("Adipositas Grad II", 35.0, 40), ("Adipositas Grad III", 40.0, 200.0))
+
+        for element in bmi_tuple[1:]:
+            counter = counter + 1
+            if element[1] <= self.bmi <= element[2]:
                 result = counter
-                counter = counter + 1
-        self.category = bmitable[result][0]
+
+        self.category = bmi_tuple[result][0]
 
     def get_category(self) -> str:
         """
@@ -116,7 +116,7 @@ class BMIcalculation:
         if self.size != 0.0 and self.weight != 0.0:
             if self.age:
                 for element in age_table:
-                    if self.age >= element[0] and self.bmi <= element[1]:
+                    if element[0] <= self.age <= element[1]:
                         ideal_bmi = ideal_bmi + element[2]
                 self.ideal_weight = round(self.size ** 2 * ideal_bmi, 2)
             else:
